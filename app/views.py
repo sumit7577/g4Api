@@ -16,12 +16,13 @@ def videoEditor(request):
         data = {}
         if complete:
             path = os.path.join(BASE_DIR, "static/", fileName.name)
+            mp3_path = os.path.join(BASE_DIR,"static/vid_audio.mp3")
             try:
                 video = VideoFileClip(path)
                 mp3 = video.audio
                 if mp3 is not None:
-                    mp3.write_audiofile("static/vid_audio.mp3")
-                mp3_size = os.path.getsize("static/vid_audio.mp3")
+                    mp3.write_audiofile(mp3_path)
+                mp3_size = os.path.getsize(mp3_path)
                 vid_size = os.path.getsize(path)
                 bitrate = int((((vid_size - mp3_size)/video.duration)/1024*8))
                 data["fps"] = video.fps
@@ -32,8 +33,8 @@ def videoEditor(request):
                 data["filename"] = fileName.name
                 if os.path.exists(path):
                     os.remove(path)
-                if os.path.exists("static/vid_audio.mp3"):
-                    os.remove("static/vid_audio.mp3")
+                if os.path.exists(mp3_path):
+                    os.remove(mp3_path)
             except Exception as e:
                 return JsonResponse({"success": False, "message": "Something Went Wrong!"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         return JsonResponse(data, status=status.HTTP_200_OK)
