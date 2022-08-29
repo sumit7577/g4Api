@@ -22,9 +22,10 @@ def videoEditor(request):
                 mp3 = video.audio
                 if mp3 is not None:
                     mp3.write_audiofile(mp3_path)
-                mp3_size = os.path.getsize(mp3_path)
+                    mp3_size = os.path.getsize(mp3_path)
+                    bitrate = int((((vid_size - mp3_size)/video.duration)/1024*8))
                 vid_size = os.path.getsize(path)
-                bitrate = int((((vid_size - mp3_size)/video.duration)/1024*8))
+                bitrate = int((((vid_size)/video.duration)/1024*8))
                 data["fps"] = video.fps
                 data["duration"] = video.duration
                 data["bitrate"] = str(bitrate)+" Kbps"
@@ -36,6 +37,7 @@ def videoEditor(request):
                 if os.path.exists(mp3_path):
                     os.remove(mp3_path)
             except Exception as e:
+                print(e)
                 return JsonResponse({"success": False, "message": "Something Went Wrong!"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         return JsonResponse(data, status=status.HTTP_200_OK)
     return JsonResponse({"sucess": False, "message": "Get! Method Not Allowed"}, status=status.HTTP_400_BAD_REQUEST)
