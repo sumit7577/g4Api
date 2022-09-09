@@ -30,3 +30,4 @@ tqdm==4.64.0
 urllib3==1.26.12
 Werkzeug==2.2.2
 zipp==3.8.1
+neo4j~=4.4.6
