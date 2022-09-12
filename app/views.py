@@ -1,14 +1,14 @@
 from rest_framework.decorators import api_view
 from django.http.response import JsonResponse
-from rest_framework.parsers import JSONParser
 from rest_framework import status
 from moviepy.editor import *
 from pathlib import Path
 import hashlib
-from app import  neo
+from app import neo
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+print(BASE_DIR)
 
 
 @api_view(["GET", "POST"])
@@ -21,7 +21,7 @@ def videoEditor(request):
             path = os.path.join(BASE_DIR, "static/", fileName.name)
             md5 = hashlib.md5(open(path,'rb').read()).hexdigest()
 
-            if fileName.name.endswith(".h264"):
+            if fileName.name.endswith(".h264") or fileName.name.endswith(".webm"):
                 outputPath= os.path.join(BASE_DIR, "static/outputVideo.mp4")
                 os.system(f'ffmpeg -i {path} {outputPath}')
                 os.remove(path)
