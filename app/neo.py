@@ -4,11 +4,6 @@ from neo4j.exceptions import ServiceUnavailable
 import logging
 import sys
 
-handler = logging.StreamHandler(sys.stdout)
-handler.setLevel(logging.DEBUG)
-logging.getLogger("neo4j").addHandler(handler)
-logging.getLogger("neo4j").setLevel(logging.DEBUG)
-
 
 class App:
 
