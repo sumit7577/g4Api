@@ -1,8 +1,5 @@
 from neo4j import GraphDatabase
-import logging
 from neo4j.exceptions import ServiceUnavailable
-import logging
-import sys
 
 
 class App:
@@ -30,10 +27,7 @@ class App:
             "RETURN p as Flavour"
         )
         result = tx.run(query)
-        flavour_data = []
-        for i in result:
-            id = i["Flavour"]["flavourid"]
-            flavour_data.append({"id":id,"name":i["Flavour"]["name"]})
+        flavour_data = [{"id":i["Flavour"]["flavourid"] or i["Flavour"]["flavourId"],"name":i["Flavour"]["name"]} for i in result]
         return flavour_data
 
     def get_api_data(self)->[]:

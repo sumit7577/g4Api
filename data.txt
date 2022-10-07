@@ -1,0 +1,31 @@
+// Query 01 
+MATCH (v:video {flavourId:"de403879-019d-43f4-bf29-fb32c470d177"}),
+(h:history{flavourId:"de403879-019d-43f4-bf29-fb32c470d177"}),
+(f:flavour{flavourId:"de403879-019d-43f4-bf29-fb32c470d177"})
+MERGE (h)-[:UPDATED_DATE]->(v)
+RETURN *
+
+// Query 02
+MATCH (v:video {flavourId:"de403879-019d-43f4-bf29-fb32c470d177",language:"English"}),
+(h:history{flavourId:"de403879-019d-43f4-bf29-fb32c470d177"}),
+(f:flavour{flavourId:"de403879-019d-43f4-bf29-fb32c470d177"})
+MATCH (f)-[r:HAS_VIDEO]->(v)
+DELETE r
+REMOVE v:video
+SET v:video_history
+RETURN *
+
+
+// Query 03
+CREATE f1= ( Fanta_Frozen_CocaCola_Blue_Raspberry_Landscape_EN : video { name:'Video', video_name:'Fanta_Frozen_CocaCola_Blue_Raspberry_Landscape_EN.h264',language:'English',video_url:"https://cdn.shopify.com/s/files/1/0256/3247/3170/products/ROBINSONS_ALL_PRODUCTS_600x600px.png?v=1648696493",videoStatus:"CurrentVideo"
+,flavourId: "de403879-019d-43f4-bf29-fb32c470d177"})
+RETURN *
+
+
+// Query 04
+MATCH (v:video {flavourId:"de403879-019d-43f4-bf29-fb32c470d177"}),
+(f:flavour{flavourId:"de403879-019d-43f4-bf29-fb32c470d177"}),
+(l:language{name: "English_Language"})
+MERGE (f)-[:HAS_VIDEO]->(v),
+(v)-[:HAS_LANGUAGE]->(l)
+RETURN *

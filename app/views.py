@@ -4,23 +4,22 @@ from rest_framework import status
 from moviepy.editor import *
 from pathlib import Path
 import hashlib
-from app import neo
+from app import neo,upload
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-print(BASE_DIR)
 
 
 @api_view(["GET", "POST"])
 def videoEditor(request):
     if request.method == "POST":
-        fileName = request.FILES["file"]
+        fileName = request.FILES.get("file")
         complete = handle_uploaded_file(fileName)
         data = {}
         if complete:
             path = os.path.join(BASE_DIR, "static/", fileName.name)
             md5 = hashlib.md5(open(path,'rb').read()).hexdigest()
-
+            
             if fileName.name.endswith(".h264") or fileName.name.endswith(".webm"):
                 outputPath= os.path.join(BASE_DIR, "static/outputVideo.mp4")
                 os.system(f'ffmpeg -i {path} {outputPath}')
@@ -62,6 +61,8 @@ def handle_uploaded_file(f):
     with open(os.path.join(BASE_DIR, "static/", f.name), 'wb+') as destination:
         for chunk in f.chunks():
             destination.write(chunk)
+    if ".mp4" in f.name or ".h264" in f.name:
+        upload.azure_blob_file_uploader.upload_file(os.path.join(BASE_DIR, "static/", f.name))
     return True
 
 
