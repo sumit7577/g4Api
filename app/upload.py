@@ -40,4 +40,5 @@ class AzureBlobFileUploader:
 
 
 # Initialize class and upload files
+
 azure_blob_file_uploader = AzureBlobFileUploader()

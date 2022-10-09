@@ -1,3 +1,4 @@
+from jinja2 import Undefined
 from rest_framework.decorators import api_view
 from django.http.response import JsonResponse
 from rest_framework import status
@@ -13,7 +14,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 @api_view(["GET", "POST"])
 def videoEditor(request):
     if request.method == "POST":
-        fileName = request.FILES.get("file")
+        fileName = request.FILES["file"]
+        flavourId = request.POST["id"]
+        language = request.POST["language"]
+        flavour = request.POST['flavour']
         complete = handle_uploaded_file(fileName)
         data = {}
         if complete:
@@ -35,7 +39,6 @@ def videoEditor(request):
                     mp3_size = os.path.getsize(mp3_path)
                     vid_size = os.path.getsize(path)
                     bitrate = int((((vid_size - mp3_size)/video.duration)/1024*8))
-                    audioTracks = os.system(f"ffprobe -show_format -show_streams -i {path} | grep Audio")
                     
                 vid_size = os.path.getsize(path)
                 bitrate = int((((vid_size)/video.duration)/1024*8))
@@ -50,6 +53,7 @@ def videoEditor(request):
                     os.remove(path)
                 if os.path.exists(mp3_path):
                     os.remove(mp3_path)
+                neo.client.insert_data(flavourId,language,flavour,fileName.name)
             except Exception as e:
                 print(e)
                 return JsonResponse({"success": False, "message": "Something Went Wrong!"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
