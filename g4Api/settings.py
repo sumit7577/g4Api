@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-9kgzff1)(z9)0v4t$wbi!a&i1qw3z)wmgda9%nkcf=j9cqvy3_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["g4api.pythonanywhere.com", "127.0.0.1"]
+ALLOWED_HOSTS = ["20.77.80.217", "127.0.0.1","localhost"]
 
 
 # Application definition
