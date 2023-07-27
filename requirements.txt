@@ -2,7 +2,7 @@ asgiref==3.5.2
 autopep8==1.7.0
 azure-core==1.26.0
 azure-storage-blob==12.13.1
-certifi==2022.6.15
+certifi==2023.7.22
 cffi==1.15.1
 charset-normalizer==2.1.1
 click==8.1.3
