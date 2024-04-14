@@ -13,7 +13,7 @@ django-cors-headers==3.13.0
 django-filter==22.1
 djangorestframework==3.13.1
 Flask==2.2.2
-idna==3.3
+idna==3.7
 imageio==2.21.1
 imageio-ffmpeg==0.4.7
 importlib-metadata==4.12.0
