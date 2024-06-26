@@ -11,7 +11,7 @@ decorator==4.4.2
 Django==4.1
 django-cors-headers==3.13.0
 django-filter==22.1
-djangorestframework==3.13.1
+djangorestframework==3.15.2
 Flask==2.2.2
 idna==3.3
 imageio==2.21.1
