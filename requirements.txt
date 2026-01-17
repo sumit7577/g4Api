@@ -1,6 +1,6 @@
 asgiref==3.5.2
 autopep8==1.7.0
-azure-core==1.26.0
+azure-core==1.38.0
 azure-storage-blob==12.13.1
 certifi==2022.6.15
 cffi==1.15.1
